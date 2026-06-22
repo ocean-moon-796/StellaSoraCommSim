@@ -1,0 +1,528 @@
+{% extends "base.html" %}
+{% block title %}Stella Sora Commission Simulator{% endblock %}
+{% block content %}
+<style>
+.select-com{
+    color: white;
+}
+
+.toggle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.toggle input {
+    display: none;
+}
+
+.toggle img {
+    width: 80px;
+
+    filter: grayscale(50%);
+    opacity: 1;
+
+    transition: 0.2s;
+    
+}
+
+.toggle input:checked + img {
+    filter: grayscale(0%);
+    opacity: 1;
+    background-color: LightSkyBlue;
+}
+
+.description {
+    margin-top: 5px;
+    font-size: 14px;
+    text-align: center;
+    color: white;
+    display: none;
+}
+
+.icon-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 120px);
+    gap: 20px;
+    justify-content: center;
+}
+
+.exclude-label{
+    color: white;
+}
+
+.tr-name{
+    color:white;
+    text-align: center;
+}
+
+.trek-icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 0px;
+    justify-content: center;
+}
+.toggle-ex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.toggle-ex input {
+    display: none;
+}
+
+.toggle-ex img {
+    width: 50px;
+
+    filter: grayscale(100%);
+    opacity: 0.5;
+
+    transition: 0.2s;
+}
+
+.toggle-ex input:checked + img {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+.search-button{
+  appearance: button;
+  backface-visibility: hidden;
+  background-color: #405cf5;
+  border-radius: 6px;
+  border-width: 0;
+  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-family: -apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif;
+  font-size: 100%;
+  height: 44px;
+  line-height: 1.15;
+  margin: 12px 0 0;
+  outline: none;
+  overflow: hidden;
+  padding: 0 25px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transform: translateZ(0);
+  transition: all .2s,box-shadow .08s ease-in;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100%;
+}
+
+.item-label{
+    font-size: 25px;
+    text-align: center;
+    color: white;
+}
+
+.reset-button{
+  background-color: #EA4C89;
+  border-radius: 8px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  height: 40px;
+  line-height: 20px;
+  list-style: none;
+  margin: 0;
+  outline: none;
+  padding: 10px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: color 100ms;
+  vertical-align: baseline;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin-bottom: 10px;
+  
+}
+
+
+</style>
+<div class="all">
+<div class="top"> 
+<h1 align="center" class="select-com">Select Commissions</h1>
+
+<form method="POST" 
+action="{{ url_for('views.result') }}">
+<div class="icon-grid">
+
+<label class="toggle">
+    <input type="checkbox" name="requirements" value="guide">
+    <img src="{{ url_for('static', filename='images/guide.png') }}" alt="Guide">
+    <span class="description">Trekker Guide</span>
+</label>
+
+<label class="toggle">
+    <input type="checkbox" name="requirements" value="disk">
+    <img src="{{ url_for('static', filename='images/disc.png') }}" alt="Disc">
+    <span class="description">Runic Disc</span>
+</label>
+
+<label class="toggle">
+    <input type="checkbox" name="requirements" value="dorra">
+    <img src="{{ url_for('static', filename='images/dorra.png') }}" alt="Dorra">
+    <span class="description">Dorra</span>
+</label>
+</div>
+
+<p class="item-label">Basic items</p>
+
+<div class="icon-grid">
+<label class="toggle">
+    <input type="checkbox" name="requirements" value="count">
+    <img src="{{ url_for('static', filename='images/count.png') }}" alt="Count">
+    <span class="description">Count</span>
+</label>
+
+<label class="toggle">
+    <input type="checkbox" name="requirements" value="hat">
+    <img src="{{ url_for('static', filename='images/hat.png') }}" alt="Hat">
+    <span class="description">Hat</span>
+</label>
+
+<label class="toggle">
+    <input type="checkbox" name="requirements" value="lumen">
+    <img src="{{ url_for('static', filename='images/lumen.png') }}" alt="Lumen">
+    <span class="description">Lumen</span>
+</label>
+</div>
+
+<p class="item-label">Trekker tier-up items</p>
+
+<div class="icon-grid">
+<label class="toggle">
+    <input type="checkbox" name="requirements" value="fire">
+    <img src="{{ url_for('static', filename='images/fire.png') }}" alt="Fire">
+    <span class="description">Fire</span>
+</label>
+
+<label class="toggle">
+    <input type="checkbox" name="requirements" value="ghost">
+    <img src="{{ url_for('static', filename='images/ghost.png') }}" alt="Ghost">
+    <span class="description">Ghost</span>
+</label>
+
+<label class="toggle">
+    <input type="checkbox" name="requirements" value="light">
+    <img src="{{ url_for('static', filename='images/light.png') }}" alt="Light">
+    <span class="description">Light</span>
+</label>
+</div>
+
+<p class="item-label">Runic Disk tier-up items</p>
+
+<div class="icon-grid">
+<label class="toggle">
+    <input type="checkbox" name="requirements" value="rhythm">
+    <img src="{{ url_for('static', filename='images/rhythm.png') }}" alt="Rythm">
+    <span class="description">Rhythm</span>
+</label>
+
+<label class="toggle">
+    <input type="checkbox" name="requirements" value="barrage">
+    <img src="{{ url_for('static', filename='images/barrage.png') }}" alt="Barrage">
+    <span class="description">Barrage</span>
+</label>
+
+<label class="toggle">
+    <input type="checkbox" name="requirements" value="fighting">
+    <img src="{{ url_for('static', filename='images/fighting.png') }}" alt="Fighting">
+    <span class="description">Fighting</span>
+</label>
+</div>
+<p class="item-label">Cartridges</p>
+
+<br />
+</div>
+<div class="bottom">
+
+<h2 align="center" class="exclude-label">
+Exclude trekkers unaquired or lower then Level 70
+</h2>
+<button type="button" id="reset-exclusions" class="reset-button">Reset Exclusions</button>
+<div class="trek-icon-grid">
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="1" checked>
+        <img src="{{ url_for('static', filename='images/Nanoha-head-xxl.png') }}">
+        <span class="tr-name">Nanoha</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="2" checked>
+        <img src="{{ url_for('static', filename='images/Gerie-head-xxl.png') }}">
+        <span class="tr-name">Gerie</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="3" checked>
+        <img src="{{ url_for('static', filename='images/Shia-head-xxl.png') }}">
+        <span class="tr-name">Shia</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="4" checked>
+        <img src="{{ url_for('static', filename='images/Chitose-head-xxl.png') }}">
+        <span class="tr-name">Chitose</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="5" checked>
+        <img src="{{ url_for('static', filename='images/Fuyuka-head-xxl.png') }}">
+        <span class="tr-name">Fuyuka</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="6" checked>
+        <img src="{{ url_for('static', filename='images/Firenze-head-xxl.png') }}">
+        <span class="tr-name">Firenze</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="7" checked>
+        <img src="{{ url_for('static', filename='images/Wraith-head-xxl.png') }}">
+        <span class="tr-name">Wraith</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="8" checked>
+        <img src="{{ url_for('static', filename='images/Sparkla-head-xxl.png') }}">
+        <span class="tr-name">Sparkla</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="9" checked>
+        <img src="{{ url_for('static', filename='images/Nazuna-head-xxl.png') }}">
+        <span class="tr-name">Nazuna</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="10" checked>
+        <img src="{{ url_for('static', filename='images/Chixia-head-xxl.png') }}">
+        <span class="tr-name">Chixia</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="11" checked>
+        <img src="{{ url_for('static', filename='images/Freesia-head-xxl.png') }}">
+        <span class="tr-name">Freesia</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="12" checked>
+        <img src="{{ url_for('static', filename='images/Mistique-head-xxl.png') }}">
+        <span class="tr-name">Mistique</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="13" checked>
+        <img src="{{ url_for('static', filename='images/Minova-head-xxl.png') }}">
+        <span class="tr-name">Minova</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="14" checked>
+        <img src="{{ url_for('static', filename='images/Nazuka-head-xxl.png') }}">
+        <span class="tr-name">Nazuka</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="15" checked>
+        <img src="{{ url_for('static', filename='images/Snowish_Laru-head-xxl.png') }}">
+        <span class="tr-name">Snowish Laru</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="16" checked>
+        <img src="{{ url_for('static', filename='images/Springseek_Coronis-head-xxl.png') }}">
+        <span class="tr-name">Springseek Coronis</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="17" checked>
+        <img src="{{ url_for('static', filename='images/Donna-head-xxl.png') }}">
+        <span class="tr-name">Donna</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="18" checked>
+        <img src="{{ url_for('static', filename='images/Otoha-head-xxl.png') }}">
+        <span class="tr-name">Otoha</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="19" checked>
+        <img src="{{ url_for('static', filename='images/Firefly-head-xxl.png') }}">
+        <span class="tr-name">Firefly</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="20" checked>
+        <img src="{{ url_for('static', filename='images/Laru-head-xxl.png') }}">
+        <span class="tr-name">Laru</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="21" checked>
+        <img src="{{ url_for('static', filename='images/Amber-head-xxl.png') }}">
+        <span class="tr-name">Amber</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="22" checked>
+        <img src="{{ url_for('static', filename='images/Noya-head-xxl.png') }}">
+        <span class="tr-name">Noya</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="23" checked>
+        <img src="{{ url_for('static', filename='images/Caramel-head-xxl.png') }}">
+        <span class="tr-name">Caramel</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="24" checked>
+        <img src="{{ url_for('static', filename='images/Shimiao-head-xxl.png') }}">
+        <span class="tr-name">Shimiao</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="25" checked>
+        <img src="{{ url_for('static', filename='images/Teresa-head-xxl.png') }}">
+        <span class="tr-name">Teresa</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="26" checked>
+        <img src="{{ url_for('static', filename='images/Tilia-head-xxl.png') }}">
+        <span class="tr-name">Tilia</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="27" checked>
+        <img src="{{ url_for('static', filename='images/Ann-head-xxl.png') }}">
+        <span class="tr-name">Ann</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="28" checked>
+        <img src="{{ url_for('static', filename='images/Flora-head-xxl.png') }}">
+        <span class="tr-name">Flora</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="29" checked>
+        <img src="{{ url_for('static', filename='images/Cosette-head-xxl.png') }}">
+        <span class="tr-name">Cosette</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="30" checked>
+        <img src="{{ url_for('static', filename='images/Canace-head-xxl.png') }}">
+        <span class="tr-name">Canace</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="31" checked>
+        <img src="{{ url_for('static', filename='images/Coronis-head-xxl.png') }}">
+        <span class="tr-name">Coronis</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="32" checked>
+        <img src="{{ url_for('static', filename='images/Kasimira-head-xxl.png') }}">
+        <span class="tr-name">Kasimira</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="33" checked>
+        <img src="{{ url_for('static', filename='images/Ridge-head-xxl.png') }}">
+        <span class="tr-name">Ridge</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="34" checked>
+        <img src="{{ url_for('static', filename='images/Iris-head-xxl.png') }}">
+        <span class="tr-name">Iris</span>
+    </label>
+
+    <label class="toggle-ex">
+             <input type="checkbox"
+               name="included_chars" value="35" checked>
+        <img src="{{ url_for('static', filename='images/Jinglin-head-xxl.png') }}">
+        <span class="tr-name">Jinglin</span>
+    </label>
+</div>
+<button onclick="resutlt.html" class="search-button">
+Show Results
+</button>
+</form>
+</div>
+</div>
+
+
+<script>
+document.getElementById("reset-exclusions")
+    .addEventListener("click", function() {
+
+        const exclusionBoxes =
+            document.querySelectorAll(
+                'input[name="included_chars"]'
+            );
+
+        exclusionBoxes.forEach(box => {
+            box.checked = true;
+        });
+
+    });
+</script>
+{% endblock %}

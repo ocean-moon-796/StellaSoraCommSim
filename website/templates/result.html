@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Results{% endblock %}
+{% block content %}
+<style>
+.result-item-image img{
+    width: 50px;
+}
+.result-group{
+    display: flex;
+    gap: 10px;
+    margin-bottom: 40px
+}
+.result-group img {
+    width: 80px
+}
+
+.text-top{
+    color: white;
+    font-size: 48px;
+}
+
+.text{
+    color: white;
+    font-size: 30px;
+}
+
+</style>
+
+
+{% if error %}
+<h2 class="text-top">Error</h2>
+<p class="text">{{ error }}</p>
+{% elif results %}
+<h3 class="text-top">Results</h3>
+    {% for comm_name, trekk_list in results.items() %}
+    <label class="result-item-image">
+    <img src=" {{ url_for('static', filename='images/' ~ comm_name ~ '.png')  }}">
+    </label>
+    <div class="result-group">
+        {% for trekk in trekk_list %}
+        <img src="{{ url_for('static', filename='images/' ~ trekk ~'-head-xxl.png') }}" 
+        alt="Trekker {{ trekk }}">
+        {% endfor %}
+    </div>
+    <br />
+    {% endfor %}
+{% else %}
+<div class="no-select">
+<h4 class="text-top">Error</h4>
+<p class="text">Select at least 1 Commission</p>
+</div>
+
+{% endif %}
+{% endblock %}
