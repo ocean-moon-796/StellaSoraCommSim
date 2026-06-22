@@ -1,3 +1,0 @@
-Simulator tool for "Commissions" in "Stella Sora" by Yostar
-Select four Commissions by clicking on the item icons
-Exclude characters you don't own or, don't meet the required level for sending out to commissions
