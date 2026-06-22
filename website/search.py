@@ -153,7 +153,7 @@ Group_Barrage  = GroupRequirement(
                   Condition("style", "ste", 1), Condition("style", "cre", 1)]
 )
 
-Group_Fight = GroupRequirement(
+Group_Fighting = GroupRequirement(
     name = "fighting", #格闘力セット
     group_size = 3,
     conditions = [Condition("role","sup", 2), Condition("role", "bal", 1),
@@ -164,7 +164,7 @@ all_commissions = {
     "dorra": Group_Dorra, "guide": Group_Guide, "disk": Group_Disk,
     "hat": Group_Hat, "count": Group_Count, "lumen": Group_Lumen,
     "ghost": Group_Ghost, "fire": Group_Fire, "light": Group_Light,
-    "rhythm": Group_Rhythm, "barrage": Group_Barrage, "fight": Group_Fight
+    "rhythm": Group_Rhythm, "barrage": Group_Barrage, "fighting": Group_Fighting
 }
 
 
