@@ -47,6 +47,7 @@ trekkers = [
     Trekker(8, "att", "cre"),
     Trekker(11, "bal", "cre"),
     Trekker(1, "att", "inq"),
+    Trekker(36, "att", "cre")
 ]
 
 trekker_names = {
@@ -61,7 +62,7 @@ trekker_names = {
     25: 'Teresa', 26: 'Tilia', 27: 'Ann', 
     28: 'Flora', 29: 'Cosette', 30: 'Canace', 
     31: 'Coronis', 32: 'Kasimira', 33: 'Ridge', 
-    34: 'Iris', 35: 'Jinglin'
+    34: 'Iris', 35: 'Jinglin', 36: 'Chaton'
     }
 
 @dataclass(frozen=True)
